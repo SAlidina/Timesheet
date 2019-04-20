@@ -145,7 +145,7 @@ function getTotalMonthsWorked(_dateComponents) {
    return moment().diff(moment([_dateComponents.year, _dateComponents.month, _dateComponents.day]), 'months', true)
 }
 function getDateComponents(_date) {
-    var dateComponents = _startDate.split("/")
+    var dateComponents = _date.split("/")
     var year = parseInt(dateComponents[2])
     var day = parseInt(dateComponents[1])
     var month = parseInt(dateComponents[0])
