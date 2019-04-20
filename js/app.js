@@ -39,7 +39,11 @@ $(document).ready(function () {
         employee.dateAdded = firebase.database.ServerValue.TIMESTAMP
         // Code for handling the push
         database.ref().push({
-            employee
+            empName: employee.fullName,
+            role: employee.role,
+            startDate: employee.startDate,
+            monthlyRate: employee.payRate,
+            dateAdded: employee.dateAdded
         });
     });
 
