@@ -90,7 +90,7 @@ function getFormData() {
     employee.fullName = $('#fullName').val().trim()
     employee.role = $('#role').val().trim()
     if (validateTime($('#startDate').val().trim())) {
-        employee.startDate = convertTimeToSeconds()
+        employee.startDate = $('#startDate').val().trim()
     } else {
         $('#errors').text('Invalid Date Please use 00/00/0000')
         return false;
