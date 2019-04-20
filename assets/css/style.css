@@ -1,0 +1,35 @@
+.card-header {
+    background-color: rgb(104 92 83);
+    color: white;
+}
+
+.jumbotron {
+    background-color: rgb(104 92 83);
+    color: white;
+}
+#btn-route {
+    background-color: rgb(104 92 83);
+    color: white;
+}
+
+.submitbttn {
+    background-color: rgb(104 92 83);
+    color: white;
+}
+
+label {
+    font-weight: bolder;
+}
+
+
+th {
+    font-weight: bolder;
+}
+
+.display-4{
+    font-weight: 400;
+}
+
+p {
+    font-size: 22px;
+}
