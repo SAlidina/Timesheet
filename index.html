@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="jumbotron jumbotron-fluid">
         <div class="container" style="text-align: center">
@@ -67,10 +69,16 @@
                         <label for="inputStartDate">Start Date MM/DD/YYYY</label>
                         <input type="role" class="form-control" id="startDate" placeholder="01/08/1989">
                     </div>
+                    <div>
+                        <label for="monthlyRate">Monthly Rate</label>
+                        <input type="role" class="form-control" id="payRate" placeholder="$500">
+                    </div>
+
                     <button type="submit" class="submitbttn">Submit</button>
                 </form>
             </div>
             <div id="errors"></div>
             <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
 </body>
+
 </html>
