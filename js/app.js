@@ -9,7 +9,7 @@ var employeeObj = function () {
             return getTotalMonthsWorked(dcom)
         },
         totalBilled: function () {
-            return getTotalBilled(this.startDate,this.payRate)
+            return getTotalBilled(this.startDate, this.payRate)
         },
         dateAdded: null
     }
@@ -25,11 +25,11 @@ var config = {
 firebase.initializeApp(config)
 var employees = []
 $(document).ready(function () {
-$('.alert').hide()
-    
+    $('.alert').hide()
+
     var database = firebase.database()
 
-    
+
 
     $(".submitbttn").on("click", function (event) {
         $('.alert').hide()
@@ -79,12 +79,12 @@ function updateTableDisplay(_employees) {
     $('#tableBody').empty()
     if (employeeLength > 0) {
 
-        for (let i = 0; i < employeeLength; i++){
-        var _employee = _employees[i]
+        for (let i = 0; i < employeeLength; i++) {
+            var _employee = _employees[i]
             var row = createRow(_employee)
             $('#tableBody').append(row)
         }
-            
+
     }
 
 }
@@ -94,64 +94,63 @@ function getFormData() {
     employee.role = $('#role').val().trim()
     employee.startDate = $('#startDate').val().trim()
     employee.payRate = $('#payRate').val().trim()
-    if(validateInput(employee)){
+    if (validateInput(employee)) {
+        clearFormValues()
         return employee
     }
     return false
 
 }
-function validateInput(_employeeObj){
+function clearFormValues() {
+    $('#fullName').val('')
+    $('#role').val('')
+    $('#startDate').val('')
+    $('#payRate').val('')
+}
+function validateInput(_employeeObj) {
     var errors = []
-    if(_employeeObj.fullName != ''){
-        if(_employeeObj.fullName.split(' ').length < 2){
-        errors.push('Full Name enter a first and last name.')
+    if (_employeeObj.fullName != '') {
+        if (_employeeObj.fullName.split(' ').length < 2) {
+            errors.push('Full Name enter a first and last name.')
         }
-    }else{
+    } else {
         errors.push('Full Name is empty.')
     }
-        var checkMoney = /[0-9]+\.*/;
-        if(!checkMoney.test(_employeeObj.payRate)){
-            errors.push('Please enter only digits (0-9) in the money feild')
-        }
-        var checkDate = /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/;
-        if(!checkDate.test(_employeeObj.startDate)){
-            errors.push('Please enter your start date as 01/01/2000')
-        }
-   
-        if(_employeeObj.role == ''){
-            errors.push('Please fill in your role.')
-        }
-        if(errors.length > 0){
-            displayErrors(errors)
-            return false
-        }
-        return true
-}
-function displayErrors(_messages){
-    $('#errors').empty()
-    if(_messages.length > 0){
+    var checkMoney = /[0-9]+\.*/;
+    if (!checkMoney.test(_employeeObj.payRate)) {
+        errors.push('Please enter only digits (0-9) in the money feild')
+    }
+    var checkDate = /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/;
+    if (!checkDate.test(_employeeObj.startDate)) {
+        errors.push('Please enter your start date as 01/01/2000')
+    }
 
-    _messages.forEach(
-        function(message){
-            var p = $('<p>')
-            $(p).text(message)
-            var dv = $('#errors')
-            $(dv).append(p)
-        }
-    )
-    $(".alert").alert();
-    $('.alert').show()
+    if (_employeeObj.role == '') {
+        errors.push('Please fill in your role.')
+    }
+    if (errors.length > 0) {
+        displayErrors(errors)
+        return false
+    }
+    return true
+}
+function displayErrors(_messages) {
+    $('#errors').empty()
+    if (_messages.length > 0) {
+
+        _messages.forEach(
+            function (message) {
+                var p = $('<p>')
+                $(p).text(message)
+                var dv = $('#errors')
+                $(dv).append(p)
+            }
+        )
+        $(".alert").alert();
+        $('.alert').show()
     }
 }
-function validateTime(date) {
-    
-    return true;
-
-
-
-}
 function createRow(_employeeObj) {
-    var table = $('#employeeTable')
     var row = $('<tr>')
     var cellName = $('<td>')
     cellName.text(_employeeObj.fullName)
@@ -171,39 +170,23 @@ function createRow(_employeeObj) {
         .append(cellPayRate)
         .append(cellMonthsWored)
         .append(cellTotalBilled)
-    
+
     return row
 
 }
-
-function toMoney(_numbers){
+function toMoney(_numbers) {
     var prefix = "$ "
-    
-
-   return  prefix + parseFloat(_numbers).toFixed(2)
+    return prefix + parseFloat(_numbers).toFixed(2)
 }
 function getTotalBilled(_startDate, _payRate) {
-    var TotalmonthsWorked = getTotalMonthsWorkedMoment(_startDate) 
+    var TotalmonthsWorked = getTotalMonthsWorkedMoment(_startDate)
     console.log(TotalmonthsWorked)
-    return TotalmonthsWorked * _payRate 
+    return TotalmonthsWorked * _payRate
 }
-function stringToMoment(_date){
-  return  moment(_date, "MM-DD-YYYY");
+function stringToMoment(_date) {
+    return moment(_date, "MM-DD-YYYY");
 }
 function getTotalMonthsWorkedMoment(_moment) {
     return moment().diff(moment(_moment), 'months', true)
- }
-function getTotalMonthsWorked(_dateComponents) {
-   return moment().diff(moment([_dateComponents.year, _dateComponents.month, _dateComponents.day]), 'months', true)
 }
-function getDateComponents(_date) {
-    var dateComponents = _date.split("/")
-    var year = parseInt(dateComponents[2])
-    var day = parseInt(dateComponents[1])
-    var month = parseInt(dateComponents[0])
-    return {
-        day: day,
-        year: year,
-        month: month
-    }
-}
+
