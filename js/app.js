@@ -29,9 +29,10 @@ $('.alert').hide()
     
     var database = firebase.database()
 
-   
+    
 
     $(".submitbttn").on("click", function (event) {
+        $('.alert').hide()
         event.preventDefault();
         $('#errors').empty()
         var employee = getFormData()
@@ -159,11 +160,11 @@ function createRow(_employeeObj) {
     var cellStartDate = $('<td>')
     cellStartDate.text(_employeeObj.startDate)
     var cellPayRate = $('<td>')
-    cellPayRate.text(_employeeObj.payRate)
+    cellPayRate.text(toMoney(_employeeObj.payRate))
     var cellMonthsWored = $('<td>')
     cellMonthsWored.text(_employeeObj.monthsWorked())
     var cellTotalBilled = $('<td>')
-    cellTotalBilled.text(_employeeObj.totalBilled())
+    cellTotalBilled.text(toMoney(_employeeObj.totalBilled()))
     row.append(cellName)
         .append(cellRole)
         .append(cellStartDate)
@@ -174,14 +175,24 @@ function createRow(_employeeObj) {
     return row
 
 }
-function getTotalBilled(_startDate, _payRate) {
 
-    var dcom = getDateComponents(_startDate) 
-    var TotalmonthsWorked = getTotalMonthsWorked(dcom)
-    console.log(TotalmonthsWorked)
-    return TotalmonthsWorked * _payRate
+function toMoney(_numbers){
+    var prefix = "$ "
+    
 
+   return  prefix + parseFloat(_numbers).toFixed(2)
 }
+function getTotalBilled(_startDate, _payRate) {
+    var TotalmonthsWorked = getTotalMonthsWorkedMoment(_startDate) 
+    console.log(TotalmonthsWorked)
+    return TotalmonthsWorked * _payRate 
+}
+function stringToMoment(_date){
+  return  moment(_date, "MM-DD-YYYY");
+}
+function getTotalMonthsWorkedMoment(_moment) {
+    return moment().diff(moment(_moment), 'months', true)
+ }
 function getTotalMonthsWorked(_dateComponents) {
    return moment().diff(moment([_dateComponents.year, _dateComponents.month, _dateComponents.day]), 'months', true)
 }
