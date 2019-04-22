@@ -25,13 +25,15 @@ var config = {
 firebase.initializeApp(config)
 var employees = []
 $(document).ready(function () {
-
+$('.alert').hide()
+    
     var database = firebase.database()
 
    
 
     $(".submitbttn").on("click", function (event) {
         event.preventDefault();
+        $('#errors').empty()
         var employee = getFormData()
         if (employee === false) {
             return false;
@@ -89,17 +91,56 @@ function getFormData() {
     var employee = new employeeObj()
     employee.fullName = $('#fullName').val().trim()
     employee.role = $('#role').val().trim()
-    if (validateTime($('#startDate').val().trim())) {
-        employee.startDate = $('#startDate').val().trim()
-    } else {
-        $('#errors').text('Invalid Date Please use 00/00/0000')
-        return false;
-    }
-    
+    employee.startDate = $('#startDate').val().trim()
     employee.payRate = $('#payRate').val().trim()
-    
-    return employee
+    if(validateInput(employee)){
+        return employee
+    }
+    return false
 
+}
+function validateInput(_employeeObj){
+    var errors = []
+    if(_employeeObj.fullName != ''){
+        if(_employeeObj.fullName.split(' ').length < 2){
+        errors.push('Full Name enter a first and last name.')
+        }
+    }else{
+        errors.push('Full Name is empty.')
+    }
+        var checkMoney = /[0-9]+\.*/;
+        if(!checkMoney.test(_employeeObj.payRate)){
+            errors.push('Please enter only digits (0-9) in the money feild')
+        }
+        var checkDate = /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/;
+        if(!checkDate.test(_employeeObj.startDate)){
+            errors.push('Please enter your start date as 01/01/2000')
+        }
+   
+        if(_employeeObj.role == ''){
+            errors.push('Please fill in your role.')
+        }
+        if(errors.length > 0){
+            displayErrors(errors)
+            return false
+        }
+        return true
+}
+function displayErrors(_messages){
+    $('#errors').empty()
+    if(_messages.length > 0){
+
+    _messages.forEach(
+        function(message){
+            var p = $('<p>')
+            $(p).text(message)
+            var dv = $('#errors')
+            $(dv).append(p)
+        }
+    )
+    $(".alert").alert();
+    $('.alert').show()
+    }
 }
 function validateTime(date) {
     
