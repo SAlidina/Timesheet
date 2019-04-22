@@ -161,14 +161,14 @@ function createRow(_employeeObj) {
     var cellPayRate = $('<td>')
     cellPayRate.text(toMoney(_employeeObj.payRate))
     var cellMonthsWored = $('<td>')
-    cellMonthsWored.text(_employeeObj.monthsWorked())
+    cellMonthsWored.text(parseInt(_employeeObj.monthsWorked()))
     var cellTotalBilled = $('<td>')
     cellTotalBilled.text(toMoney(_employeeObj.totalBilled()))
     row.append(cellName)
         .append(cellRole)
         .append(cellStartDate)
-        .append(cellPayRate)
         .append(cellMonthsWored)
+        .append(cellPayRate)
         .append(cellTotalBilled)
 
     return row
