@@ -5,8 +5,8 @@ var employeeObj = function () {
         startDate: null,
         payRate: 0,
         monthsWorked: function () {
-            var dcom = getDateComponents(this.startDate)
-            return getTotalMonthsWorked(dcom)
+            var datecom = stringToMoment(this.startDate)
+            return getTotalMonthsWorkedMoment(datecom)
         },
         totalBilled: function () {
             return getTotalBilled(this.startDate, this.payRate)
